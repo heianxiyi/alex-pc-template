@@ -16,6 +16,14 @@ function requireAuth(to, from, next) {
   }
 }
 
+function requireLoginAuth(to, from, next){
+  if (!authUtils.loggedIn()) {
+    next()
+  } else {
+    next('/')
+  }
+}
+
 const routes = [
   {
     path: '*',
@@ -37,7 +45,8 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    beforeEnter: requireLoginAuth
   }
 ]
 

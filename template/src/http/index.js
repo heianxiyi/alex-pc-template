@@ -2,7 +2,7 @@ import axios from 'axios';
 import router from '../router/index'
 import config from '@/config'
 import { notification } from 'ant-design-vue'
-import { getToken } from './auth/utils'
+import { getToken, removeToken } from './auth/utils'
 
 // 创建axios实例
 const api = axios.create({
@@ -48,6 +48,7 @@ api.interceptors.response.use(response => {
                     message: '无授权',
                     description: '未授权，请重新登录！',
                 });
+                removeToken()
                 router.currentRoute.path !== 'login' &&
                     router.replace({
                         path: 'login',
